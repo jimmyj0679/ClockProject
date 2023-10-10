@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Digital Clock</title>
+        <link rel="stylesheet" href="Clockprojectcss.css">
+
+ 
+</head>
+
+<body>
+    <button id="toggleButton">ShowTimeZones</button>
+    <div id="contentSection" class="hidden">
+        
+    <h1 class="h1">WorldTimes</h1>
+        <div class ="page">
+        <label for="timezone">Select a Time Zone:</label>
+        <select id="timezone">
+            <option value="America/New_York">New York</option>
+            <option value="America/Los_Angeles">Los Angeles</option>
+            <option value="Europe/London">London</option>
+            <option value="Europe/Paris">Paris</option>
+            <option value="America/Montreal">Quebec</option>
+            </select>
+        </div>
+    
+        <p class="ct">Current Time: <span id="current-time"></span></p>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('toggleButton');
+    const contentSection = document.getElementById('contentSection');
+
+    toggleButton.addEventListener('click', function() {
+        contentSection.style.display = contentSection.style.display === 'none' ? 'block' : 'none';
+    });
+});
+    </script>
+    
+        
+       
+    <div class="hero">
+        <div class="container">
+            <div class="clock">
+                <span id="Hrs">00</span>
+                <span>:</span>
+                <span id="min">00</span>
+                <span>:</span>
+                <span id="sec">00</span>                
+                </div>
+            </div>
+        </div>
+            
+           <script>
+            let Hrs = document.getElementById("Hrs");
+            let min = document.getElementById("min");
+            let sec = document.getElementById("sec");
+
+            setInterval(()=>{
+            
+
+            let currenttime = new Date();
+            
+//To display time counting up in seconds and to display a leading 0
+            Hrs.innerHTML = (currenttime.getHours()<10?"0":"") + currenttime.getHours();
+            min.innerHTML = (currenttime.getMinutes()<10?"0":"") + currenttime.getMinutes();
+            sec.innerHTML = (currenttime.getSeconds()<10?"0":"") + currenttime.getSeconds();
+            
+            },1000)
+
+           </script>  
+           
+           <script>
+            const timezoneSelect = document.getElementById('timezone');
+            const currentTimeDisplay = document.getElementById('current-time');
+
+// Function to update the displayed time based on the selected time zone
+        function updateClock() {
+        const selectedTimezone = timezoneSelect.value;
+        const selectedTimeZoneObj = Intl.DateTimeFormat(undefined, { timeZone: selectedTimezone });
+        const currentTime = new Date().toLocaleTimeString([], { timeZone: selectedTimezone });
+        currentTimeDisplay.textContent = `${selectedTimeZoneObj.resolvedOptions().timeZone}: ${currentTime}`;
+}
+
+// Add an event listener to the dropdown list
+        timezoneSelect.addEventListener('change', updateClock);
+
+// Call the updateClock function initially to display the default time
+        updateClock();
+
+
+           </script>         
+</body>
+
+</html>
